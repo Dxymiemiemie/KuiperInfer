@@ -28,7 +28,7 @@
 
 TEST(test_layer, deconv_nogroup) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/unet/demo_deconv.pnnx.param", "tmp/unet/demo_deconv.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/demo_deconv.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/demo_deconv.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -44,7 +44,7 @@ TEST(test_layer, deconv_nogroup) {
   graph.Forward(false);
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/unet/test.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/test.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {
@@ -55,7 +55,7 @@ TEST(test_layer, deconv_nogroup) {
 
 TEST(test_layer, deconv_group1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/unet/demo_deconv2_.pnnx.param", "tmp/unet/demo_deconv2_.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/demo_deconv2_.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/demo_deconv2_.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -71,7 +71,7 @@ TEST(test_layer, deconv_group1) {
   graph.Forward(false);
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/unet/test2.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/test2.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {
@@ -82,7 +82,7 @@ TEST(test_layer, deconv_group1) {
 
 TEST(test_layer, deconv_group2) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/unet/demo_deconv3_.pnnx.param", "tmp/unet/demo_deconv3_.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/demo_deconv3_.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/demo_deconv3_.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -98,7 +98,7 @@ TEST(test_layer, deconv_group2) {
   graph.Forward(false);
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/unet/test3.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/unet/test3.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {
@@ -109,8 +109,8 @@ TEST(test_layer, deconv_group2) {
 
 TEST(test_layer, deconv_group_dilation1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/resnet/demo_deconv_d_samplept.pnnx.param",
-                     "tmp/resnet/demo_deconv_d_samplept.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/demo_deconv_d_samplept.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/demo_deconv_d_samplept.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -128,7 +128,7 @@ TEST(test_layer, deconv_group_dilation1) {
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
   arma::fmat real_data =
-      CSVDataLoader::LoadData<float>("tmp/resnet/test_convtranspose_d_sample.csv");
+      CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/test_convtranspose_d_sample.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {
@@ -139,8 +139,8 @@ TEST(test_layer, deconv_group_dilation1) {
 
 TEST(test_layer, deconv_group_dilation2) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/resnet/demo_deconv_dpt11.pnnx.param",
-                     "tmp/resnet/demo_deconv_dpt11.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/demo_deconv_dpt11.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/demo_deconv_dpt11.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -156,7 +156,7 @@ TEST(test_layer, deconv_group_dilation2) {
   graph.Forward(false);
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/resnet/test_convtranspose_d.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/test_convtranspose_d.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {
@@ -167,8 +167,8 @@ TEST(test_layer, deconv_group_dilation2) {
 
 TEST(test_layer, deconv_group_dilation3) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/resnet/demo_deconv_dpt31.pnnx.param",
-                     "tmp/resnet/demo_deconv_dpt31.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/demo_deconv_dpt31.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/demo_deconv_dpt31.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -184,7 +184,7 @@ TEST(test_layer, deconv_group_dilation3) {
   graph.Forward(false);
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/resnet/test_convtranspose_d31.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/test_convtranspose_d31.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {

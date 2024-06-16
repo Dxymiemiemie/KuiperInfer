@@ -41,7 +41,7 @@ StatusCode Convolution(const std::vector<std::shared_ptr<Tensor<float>>>& inputs
   }
   if (weights_.empty()) {
     LOG(ERROR) << "Weight parameters is empty";
-    return StatusCode::kInferParamError;
+    return StatusCode::kInferParameterError;
   }
 
   const uint32_t batch_size = inputs.size();
@@ -67,7 +67,7 @@ StatusCode Convolution(const std::vector<std::shared_ptr<Tensor<float>>>& inputs
       uint32_t output_w = uint32_t(std::floor((input_w - kernel_w) / stride_w_ + 1));
       if (output_h <= 0 || output_w <= 0) {
         LOG(ERROR) << "The size of the output feature map is less than zero";
-        return StatusCode::kInferParamError;
+        return StatusCode::kInferParameterError;
       }
 
       if (!output_data) {
@@ -77,7 +77,7 @@ StatusCode Convolution(const std::vector<std::shared_ptr<Tensor<float>>>& inputs
 
       if (kernel->channels() != input_c) {
         LOG(ERROR) << "The channel of the weight and input is not adapting";
-        return StatusCode::kInferParamError;
+        return StatusCode::kInferParameterError;
       }
       arma::fmat& output_channel = output_data->slice(k);
       for (uint32_t ic = 0; ic < input_c; ++ic) {
@@ -618,7 +618,7 @@ TEST(test_layer, convolution1x1x1_stride1x1_padding0) {
 
 TEST(test_layer, conv3x3_fromtorch) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/resnet/conv1.pnnx.param", "tmp/resnet/conv1.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/conv1.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/conv1.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -637,7 +637,7 @@ TEST(test_layer, conv3x3_fromtorch) {
   graph.Forward(false);
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
   const std::vector<float> outputs_values = outputs.front()->values(true);
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/resnet/test13.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/test13.csv");
   for (int i = 0; i < outputs_values.size(); ++i) {
     ASSERT_LE(std::abs(real_data.at(i) - outputs_values.at(i)), 1e-4f)
         << i << " real: " << real_data.at(i) << " predict: " << outputs_values.at(i);
@@ -646,8 +646,8 @@ TEST(test_layer, conv3x3_fromtorch) {
 
 TEST(test_layer, conv_dilation1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/resnet/dilation_conv_pt.pnnx.param",
-                     "tmp/resnet/dilation_conv_pt.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/dilation_conv_pt.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/dilation_conv_pt.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -663,7 +663,7 @@ TEST(test_layer, conv_dilation1) {
   graph.Forward(false);
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/resnet/test_dilation.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/test_dilation.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {
@@ -674,8 +674,8 @@ TEST(test_layer, conv_dilation1) {
 
 TEST(test_layer, conv_dilation2) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/resnet/dilation_conv_pt2.pnnx.param",
-                     "tmp/resnet/dilation_conv_pt2.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/dilation_conv_pt2.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/dilation_conv_pt2.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -691,7 +691,7 @@ TEST(test_layer, conv_dilation2) {
   graph.Forward(false);
 
   std::vector<sftensor> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/resnet/test_dilation2.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/resnet/test_dilation2.csv");
   const auto& outputs_values = outputs.front()->values(true);
 
   for (int i = 0; i < outputs_values.size(); ++i) {

@@ -22,17 +22,18 @@
 // Created by fss on 22-12-25.
 
 #include "silu.hpp"
-#include "activation.hpp"
 #include "layer/abstract/layer_factory.hpp"
 #include "simd.hpp"
 #include "tick.hpp"
 
 namespace kuiper_infer {
-using namespace activation;
+
+SiLULayer::SiLULayer() : NonParamLayer("SiLU") {}
+
 StatusCode SiLULayer::Forward(const std::vector<std::shared_ptr<Tensor<float>>>& inputs,
                               std::vector<std::shared_ptr<Tensor<float>>>& outputs) {
   using namespace activation;
-  return ActivationLayer::Forward(inputs, outputs);
+  return ActivationForward(ActivationType::kActivationSilu, inputs, outputs);
 }
 
 StatusCode SiLULayer::CreateInstance(const std::shared_ptr<RuntimeOperator>& op,
@@ -44,8 +45,6 @@ StatusCode SiLULayer::CreateInstance(const std::shared_ptr<RuntimeOperator>& op,
   silu_layer = std::make_shared<SiLULayer>();
   return StatusCode::kSuccess;
 }
-
-SiLULayer::SiLULayer() : ActivationLayer(ActivationType::kActivationSilu, "nn.SiLU") {}
 
 LayerRegistererWrapper kSiluCreateInstance(SiLULayer::CreateInstance, "nn.SiLU");
 

@@ -35,6 +35,7 @@ TEST(test_layer, forward_upsample1) {
   const uint32_t cols = 224;
 
   std::shared_ptr<Tensor<float>> input = std::make_shared<Tensor<float>>(channels, rows, cols);
+  
   input->RandN();
 
   std::vector<std::shared_ptr<Tensor<float>>> inputs;
@@ -200,7 +201,7 @@ TEST(test_layer, forward_upsample5) {
 
 TEST(test_layer, forward_upsample_bilinear_noalign1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/up/up_layer_mod.pnnx.param", "tmp/up/up_layer_mod.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -221,7 +222,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign1) {
   ASSERT_EQ(outputs.size(), 1);
 
   sftensor output = outputs.front();
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/up/test_upsample_bilinear.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/test_upsample_bilinear.csv");
   auto output_values = output->values(true);
   for (uint32_t i = 0; i < output->size(); ++i) {
     float output1 = real.at(i);
@@ -233,7 +234,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign1) {
 
 TEST(test_layer, forward_upsample_bilinear_noalign2) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/up/up_layer_mod1.pnnx.param", "tmp/up/up_layer_mod1.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod1.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod1.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -254,7 +255,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign2) {
   ASSERT_EQ(outputs.size(), 1);
 
   sftensor output = outputs.front();
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/up/test_upsample_bilinear11.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/test_upsample_bilinear11.csv");
   auto output_values = output->values(true);
   for (uint32_t i = 0; i < output->size(); ++i) {
     float output1 = real.at(i);
@@ -266,7 +267,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign2) {
 
 TEST(test_layer, forward_upsample_bilinear_noalign3) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/up/up_layer_mod2.pnnx.param", "tmp/up/up_layer_mod2.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod2.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod2.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 1;
@@ -287,7 +288,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign3) {
   ASSERT_EQ(outputs.size(), 1);
 
   sftensor output = outputs.front();
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/up/test_upsample_bilinear_align3.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/test_upsample_bilinear_align3.csv");
   auto output_values = output->values(true);
   for (uint32_t i = 0; i < output->size(); ++i) {
     float output1 = real.at(i);
@@ -299,7 +300,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign3) {
 
 TEST(test_layer, forward_upsample_bilinear_noalign4) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/up/up_layer_mod4.pnnx.param", "tmp/up/up_layer_mod4.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod4.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod4.pnnx.bin");
 
   graph.Build();
   std::vector<std::shared_ptr<Tensor<float>>> inputs;
@@ -319,7 +320,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign4) {
   ASSERT_EQ(outputs.size(), 1);
 
   sftensor output = outputs.front();
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/up/test_upsample_bilinear_align4.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/test_upsample_bilinear_align4.csv");
   auto output_values = output->values(true);
   for (uint32_t i = 0; i < output->size(); ++i) {
     float output1 = real.at(i);
@@ -331,7 +332,7 @@ TEST(test_layer, forward_upsample_bilinear_noalign4) {
 
 TEST(test_layer, forward_upsample_bilinear_align1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/up/up_layer_mod5.pnnx.param", "tmp/up/up_layer_mod5.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod5.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod5.pnnx.bin");
 
   graph.Build();
   std::vector<std::shared_ptr<Tensor<float>>> inputs;
@@ -351,7 +352,7 @@ TEST(test_layer, forward_upsample_bilinear_align1) {
   ASSERT_EQ(outputs.size(), 1);
 
   sftensor output = outputs.front();
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/up/test_upsample_bilinear_align5.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/test_upsample_bilinear_align5.csv");
   auto output_values = output->values(true);
   for (uint32_t i = 0; i < output->size(); ++i) {
     float output1 = real.at(i);
@@ -363,7 +364,7 @@ TEST(test_layer, forward_upsample_bilinear_align1) {
 
 TEST(test_layer, forward_upsample_bilinear_align2) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/up/up_layer_mod6.pnnx.param", "tmp/up/up_layer_mod6.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod6.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/up/up_layer_mod6.pnnx.bin");
 
   graph.Build();
   std::vector<std::shared_ptr<Tensor<float>>> inputs;
@@ -383,7 +384,7 @@ TEST(test_layer, forward_upsample_bilinear_align2) {
   ASSERT_EQ(outputs.size(), 1);
 
   sftensor output = outputs.front();
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/up/test_upsample_bilinear_align6.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/up/test_upsample_bilinear_align6.csv");
   auto output_values = output->values(true);
   for (uint32_t i = 0; i < output->size(); ++i) {
     float output1 = real.at(i);

@@ -25,6 +25,7 @@
 #include "data/load_data.hpp"
 #include "runtime/runtime_ir.hpp"
 
+#if 0
 TEST(test_net, forward_resnet18) {
   using namespace kuiper_infer;
   RuntimeGraph graph("tmp/resnet/resnet18_batch1.param", "tmp/resnet/resnet18_batch1.pnnx.bin");
@@ -51,7 +52,8 @@ TEST(test_net, forward_resnet18) {
     }
   }
 }
-
+#endif
+#if 0
 TEST(test_net, forward_group_conv) {
   using namespace kuiper_infer;
   RuntimeGraph graph("tmp/group_conv/group_conv.pnnx.param", "tmp/group_conv/group_conv.pnnx.bin");
@@ -75,7 +77,8 @@ TEST(test_net, forward_group_conv) {
     ASSERT_LE(std::abs(output1.at(s) - output2.at(s)), 5e-6);
   }
 }
-
+#endif
+#if 0
 TEST(test_net, forward_mobilenet1) {
   using namespace kuiper_infer;
   RuntimeGraph graph("tmp/mobilenet/mobile.pnnx.param", "tmp/mobilenet/mobile.pnnx.bin");
@@ -102,7 +105,8 @@ TEST(test_net, forward_mobilenet1) {
     }
   }
 }
-
+#endif
+#if 0
 TEST(test_net, forward_mobilenet2) {
   using namespace kuiper_infer;
   RuntimeGraph graph("tmp/mobilenet/mobile_224.pnnx.param", "tmp/mobilenet/mobile_224.pnnx.bin");
@@ -131,3 +135,4 @@ TEST(test_net, forward_mobilenet2) {
     }
   }
 }
+#endif

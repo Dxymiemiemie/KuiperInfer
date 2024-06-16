@@ -58,12 +58,12 @@ StatusCode LLamaMatmulLayer::Forward(const std::vector<std::shared_ptr<Tensor<fl
 
   if (this->weights_.empty()) {
     LOG(ERROR) << "The weight tensor in the matmul layer is empty";
-    return StatusCode::kInferParamError;
+    return StatusCode::kInferParameterError;
   }
 
   if (weights_.size() != 1) {
     LOG(ERROR) << "Need one weight tensor in the matmul layer";
-    return StatusCode::kInferParamError;
+    return StatusCode::kInferParameterError;
   }
 
   // w @ x

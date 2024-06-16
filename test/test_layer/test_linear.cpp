@@ -201,8 +201,8 @@ TEST(test_layer, forward_linear5) {
 
 TEST(test_layer, forward_linear7) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/linear/linear_512_1000.pnnx.param",
-                     "tmp/linear/linear_512_1000.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_512_1000.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_512_1000.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 4;
@@ -217,7 +217,7 @@ TEST(test_layer, forward_linear7) {
   graph.set_inputs("pnnx_input_0", inputs);
   graph.Forward(false);
   outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/linear/linear_512x1000.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_512x1000.csv");
   for (const auto& output : outputs) {
     for (uint32_t c = 0; c < output->channels(); ++c) {
       bool is_same = arma::approx_equal(real_data, output->slice(c), "absdiff", 1e-4f);
@@ -228,8 +228,8 @@ TEST(test_layer, forward_linear7) {
 
 TEST(test_layer, forward_linear8) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/linear/linear_1305_2407.pnnx.param",
-                     "tmp/linear/linear_1305_2407.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305_2407.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305_2407.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 4;
@@ -244,7 +244,7 @@ TEST(test_layer, forward_linear8) {
   graph.Forward(false);
   std::vector<std::shared_ptr<Tensor<float>>> outputs = graph.get_outputs("pnnx_output_0");
 
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/linear/linear_1305x2047.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305x2047.csv");
   for (const auto& output : outputs) {
     for (uint32_t c = 0; c < output->channels(); ++c) {
       bool is_same = arma::approx_equal(real_data, output->slice(c), "absdiff", 1e-4f);
@@ -255,8 +255,8 @@ TEST(test_layer, forward_linear8) {
 
 TEST(test_layer, forward_linear9) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/linear/linear_1305_2407.pnnx.param",
-                     "tmp/linear/linear_1305_2407.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305_2407.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305_2407.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 4;
@@ -270,7 +270,7 @@ TEST(test_layer, forward_linear9) {
   graph.set_inputs("pnnx_input_0", inputs);
   graph.Forward(false);
   std::vector<std::shared_ptr<Tensor<float>>> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/linear/linear_1305x2047.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305x2047.csv");
   for (const auto& output : outputs) {
     for (uint32_t c = 0; c < output->channels(); ++c) {
       bool is_same = arma::approx_equal(real_data, output->slice(c), "absdiff", 1e-4f);
@@ -281,8 +281,8 @@ TEST(test_layer, forward_linear9) {
 
 TEST(test_layer, forward_linear10) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/linear/linear_1305_2407.pnnx.param",
-                     "tmp/linear/linear_1305_2407.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305_2407.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305_2407.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 4;
@@ -300,7 +300,7 @@ TEST(test_layer, forward_linear10) {
   graph.set_inputs("pnnx_input_0", inputs);
   graph.Forward(false);
   std::vector<std::shared_ptr<Tensor<float>>> outputs = graph.get_outputs("pnnx_output_0");
-  arma::fmat real_data = CSVDataLoader::LoadData<float>("tmp/linear/linear_1305x2047_arange.csv");
+  arma::fmat real_data = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/linear/linear_1305x2047_arange.csv");
   for (const auto& output : outputs) {
     for (uint32_t c = 0; c < output->channels(); ++c) {
       bool is_same = arma::approx_equal(real_data, output->slice(c), "absdiff", 1e-1f);

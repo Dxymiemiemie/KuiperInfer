@@ -54,6 +54,21 @@ Tensor<T>::Tensor(T* raw_ptr, uint32_t channels, uint32_t rows, uint32_t cols) {
     this->raw_shapes_ = std::vector<uint32_t>{channels, rows, cols};
   }
 }
+//为了通过cube直接传值重载
+template <typename T>
+Tensor<T>::Tensor( arma::Cube<T> * raw_ptr,uint32_t channels, uint32_t rows, uint32_t cols) {
+  CHECK_NE(raw_ptr, nullptr);
+  this->data_ = *raw_ptr;
+
+
+    // this->raw_shapes_ = std::vector<uint32_t>{cols};
+  
+    // this->raw_shapes_ = std::vector<uint32_t>{rows, cols};
+  
+    this->raw_shapes_ = std::vector<uint32_t>{channels, rows, cols};
+  
+}
+
 
 template <typename T>
 Tensor<T>::Tensor(T* raw_ptr, const std::vector<uint32_t>& shapes) {
@@ -365,7 +380,7 @@ void Tensor<T>::Reshape(const std::vector<uint32_t>& shapes, bool row_major) {
   CHECK(!shapes.empty());
   const size_t origin_size = this->size();
   const size_t current_size =
-      std::accumulate(shapes.begin(), shapes.end(), size_t(1), std::multiplies<size_t>());
+      std::accumulate(shapes.begin(), shapes.end(), 1, std::multiplies<size_t>());
   CHECK(shapes.size() <= 3);
   CHECK(current_size == origin_size);
   if (!row_major) {

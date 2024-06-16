@@ -41,6 +41,7 @@ class Tensor {
 
   explicit Tensor(T* raw_ptr, const std::vector<uint32_t>& shapes);
 
+  explicit Tensor(arma::Cube<T> * raw_ptr,uint32_t channels, uint32_t rows, uint32_t cols) ;
   /**
    * @brief Construct a new empty Tensor
    */

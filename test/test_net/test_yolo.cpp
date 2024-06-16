@@ -27,8 +27,8 @@
 
 TEST(test_net, forward_yolo1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/yolo/demo/yolov5n_small.pnnx.param",
-                     "tmp/yolo/demo/yolov5n_small.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/yolo/demo/yolov5n_small.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/yolo/demo/yolov5n_small.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 4;
@@ -44,7 +44,7 @@ TEST(test_net, forward_yolo1) {
   graph.Forward(false);
   std::vector<std::shared_ptr<Tensor<float>>> outputs = graph.get_outputs("pnnx_output_0");
   for (int i = 0; i < batch_size; ++i) {
-    std::string file_path = "tmp/yolo/" + std::to_string(i + 1) + ".csv";
+    std::string file_path = "/home/brown/GGB_kuiper/KuiperInfer/tmp/yolo/" + std::to_string(i + 1) + ".csv";
     const auto& output1 = CSVDataLoader::LoadData<float>(file_path);
     const auto& output2 = outputs.at(i);
 
@@ -60,8 +60,8 @@ TEST(test_net, forward_yolo1) {
 
 TEST(test_net, forward_yolo2) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/yolo/demo/yolov5n_small.pnnx.param",
-                     "tmp/yolo/demo/yolov5n_small.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/yolo/demo/yolov5n_small.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/yolo/demo/yolov5n_small.pnnx.bin");
 
   graph.Build();
   const uint32_t batch_size = 4;
@@ -76,7 +76,7 @@ TEST(test_net, forward_yolo2) {
   graph.Forward(false);
   std::vector<std::shared_ptr<Tensor<float>>> outputs = graph.get_outputs("pnnx_output_0");
   for (int i = 0; i < batch_size; ++i) {
-    std::string file_path = "tmp/yolo/" + std::to_string((i + 1) * 10 + 1) + ".csv";
+    std::string file_path = "/home/brown/GGB_kuiper/KuiperInfer/tmp/yolo/" + std::to_string((i + 1) * 10 + 1) + ".csv";
     const auto& output1 = CSVDataLoader::LoadData<float>(file_path);
     const auto& output2 = outputs.at(i);
 

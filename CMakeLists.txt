@@ -32,7 +32,9 @@ endif ()
 
 find_package(benchmark REQUIRED)
 find_package(OpenMP REQUIRED)
-find_package(Armadillo REQUIRED)
+# find_package(Armadillo REQUIRED)
+set(ARMADILLO_LIBRARIES "/usr/lib/libarmadillo.so.9")
+
 find_package(glog REQUIRED)
 find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
@@ -47,7 +49,7 @@ aux_source_directory(./source/parser DIR_PARSER)
 aux_source_directory(./source/utils/time DIR_UTILS)
 aux_source_directory(./source/utils/math DIR_MATH)
 
-
+set(DEVELOPMENT ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(link_lib glog::glog)
@@ -68,11 +70,13 @@ target_include_directories(kuiper PUBLIC ${Armadillo_INCLUDE_DIR})
 # mathfun library defines
 add_compile_definitions(SSE_MATHFUN_WITH_CODE USE_SSE_AUTO)
 # 本项目的开发者请使用set(DEVELOPMENT ON)或者在cmake中添加-DDEVELOPMENT=ON将选项打开
+
 option(DEVELOPMENT ON)
 if (${DEVELOPMENT})
     message(STATUS "DEVELOPMENT MODE ON")
     enable_testing()
-    add_subdirectory(bench)
+    add_subdirectory(demos)
+    # add_subdirectory(bench)
     add_subdirectory(test)
 endif ()
 

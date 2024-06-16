@@ -28,7 +28,7 @@
 
 TEST(test_layer, add1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/add/resnet_add.pnnx.param", "tmp/add/resnet_add.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.bin");
 
   graph.Build();
 
@@ -45,7 +45,7 @@ TEST(test_layer, add1) {
   ASSERT_EQ(output_tensors.size(), 4);
 
   const auto& output1 = output_tensors.at(0)->slice(0);
-  const auto& output2 = CSVDataLoader::LoadData<float>("tmp/add/1.csv");
+  const auto& output2 = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/1.csv");
   ASSERT_EQ(output1.size(), output2.size());
 
   const uint32_t size = output1.size();
@@ -56,7 +56,7 @@ TEST(test_layer, add1) {
 
 TEST(test_layer, add2) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/add/resnet_add2.pnnx.param", "tmp/add/resnet_add2.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add2.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add2.pnnx.bin");
 
   graph.Build();
 
@@ -74,7 +74,7 @@ TEST(test_layer, add2) {
   ASSERT_EQ(output_tensors.size(), 4);
 
   const auto& output1 = output_tensors.at(0)->slice(0);
-  const auto& output2 = CSVDataLoader::LoadData<float>("tmp/add/3.csv");
+  const auto& output2 = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/3.csv");
   ASSERT_EQ(output1.size(), output2.size());
 
   const uint32_t size = output1.size();
@@ -85,7 +85,7 @@ TEST(test_layer, add2) {
 
 TEST(test_layer, mul1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/add/resnet_add3.pnnx.param", "tmp/add/resnet_add3.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add3.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add3.pnnx.bin");
 
   graph.Build();
 
@@ -103,7 +103,7 @@ TEST(test_layer, mul1) {
   ASSERT_EQ(output_tensors.size(), 4);
 
   const auto& output1 = output_tensors.at(0)->slice(0);
-  const auto& output2 = CSVDataLoader::LoadData<float>("tmp/add/7.csv");
+  const auto& output2 = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/7.csv");
   ASSERT_EQ(output1.size(), output2.size());
 
   const uint32_t size = output1.size();

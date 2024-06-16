@@ -122,11 +122,28 @@ void RuntimeGraph::Build() {
   RuntimeOperatorUtils<float>::InitOperatorInput(operators_);
   RuntimeOperatorUtils<float>::InitOperatorOutput(graph_->ops, operators_);
 
+  // const auto &operands = graph_->operands;
+  // for (int i = 0; i < operands.size(); ++i) {
+  //   const auto &operand = operands.at(i);
+  //   LOG(INFO) << "Operand Name: #" << operand->name;
+  //   LOG(INFO) << "Customers: ";
+  //   for (const auto &customer : operand->consumers) {
+  //     LOG(INFO) << customer->name;
+  //   }
+
+  //   LOG(INFO) << "Producer: " << operand->producer->name<<"!!!!";
+  // }
+
+
   graph_state_ = GraphState::Complete;
   if (graph_ != nullptr) {
     graph_.reset();
     graph_ = nullptr;
   }
+
+
+
+
 }
 
 template <typename T>
@@ -166,8 +183,12 @@ void RuntimeGraph::Forward(bool debug) {
     CHECK(current_op->layer != nullptr)
         << "The layer corresponding to the op " << current_op->name
         << " is empty, indicating that it may not have been created.";
-
+    // if(current_op->name=="F.sigmoid_168")
+    // {
+    //   std::cout<<"attention.att.0"<<std::endl;
+    // }
     StatusCode status = ExecuteLayer(current_op->layer, current_op->name, current_op->type, debug);
+
     CHECK(status == StatusCode::kSuccess)
         << current_op->layer->layer_name()
         << " layer forward failed, error code: " << int32_t(status);
@@ -427,6 +448,10 @@ void RuntimeGraph::ReverseTopoSortInternal(const std::shared_ptr<RuntimeOperator
   }
 
   root_op->has_forward = true;
+  if(root_op->name=="torch.transpose_228")
+  {
+    std::cout<<"torch.transpose_228"<<std::endl;
+  }
   const auto& next_ops = root_op->output_operators;
   for (const auto& [_, op] : next_ops) {
     if (op != nullptr && !op->has_forward) {
@@ -451,7 +476,21 @@ void RuntimeGraph::CreateNodeRelation() {
         if (output_op != current_op && output_op->name == kOutputName) {
           current_op->output_operators.insert({kOutputName, output_op});
         }
+
       }
+      if(current_op->name=="torch.transpose_228")
+      {
+              std::cout<<"current_op->name: "<<current_op->name<<std::endl;
+      int index = 0;
+    std::for_each(current_op->output_operators.begin(), current_op->output_operators.end(), [&index](const auto& pair) {
+        std::cout << "output " << index << ": " << pair.first<< std::endl;
+        ++index;
+    });
+    std::cout<<std::endl;
+      }
+
+
+    
     }
     // 除了输入和输出节点，都创建layer
     if (current_op->type != "pnnx.Input" && current_op->type != "pnnx.Output") {

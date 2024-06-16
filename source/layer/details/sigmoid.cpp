@@ -27,13 +27,11 @@
 #include "simd.hpp"
 
 namespace kuiper_infer {
-using namespace activation;
-SigmoidLayer::SigmoidLayer() : ActivationLayer(ActivationType::kActivationSigmoid, "nn.Sigmoid") {}
 
 StatusCode SigmoidLayer::Forward(const std::vector<std::shared_ptr<Tensor<float>>>& inputs,
                                  std::vector<std::shared_ptr<Tensor<float>>>& outputs) {
   using namespace activation;
-  return ActivationLayer::Forward(inputs, outputs);
+  return ActivationForward(ActivationType::kActivationSigmoid, inputs, outputs);
 }
 
 StatusCode SigmoidLayer::CreateInstance(const std::shared_ptr<RuntimeOperator>& op,
@@ -47,4 +45,5 @@ StatusCode SigmoidLayer::CreateInstance(const std::shared_ptr<RuntimeOperator>& 
 }
 
 LayerRegistererWrapper kSigmoidCreateInstance(SigmoidLayer::CreateInstance, "nn.Sigmoid");
+LayerRegistererWrapper ktorchSigmoidCreateInstance(SigmoidLayer::CreateInstance, "F.sigmoid");
 }  // namespace kuiper_infer

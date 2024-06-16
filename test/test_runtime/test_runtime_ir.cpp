@@ -580,7 +580,7 @@ TEST(test_runtime, set_bin_path) {
 
 TEST(test_runtime, graph_build1) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/add/resnet_add.pnnx.param", "tmp/add/resnet_add.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.bin");
   ASSERT_EQ(int(graph.graph_state()), -2);  // need_init
   graph.Build();
   ASSERT_EQ(int(graph.graph_state()), 0);
@@ -588,7 +588,7 @@ TEST(test_runtime, graph_build1) {
 
 TEST(test_runtime, op_is_input) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/add/resnet_add.pnnx.param", "tmp/add/resnet_add.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.bin");
   ASSERT_EQ(int(graph.graph_state()), -2);  // need_init
   graph.Build();
   ASSERT_EQ(int(graph.graph_state()), 0);
@@ -598,10 +598,18 @@ TEST(test_runtime, op_is_input) {
 
 TEST(test_runtime, op_is_output) {
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/add/resnet_add.pnnx.param", "tmp/add/resnet_add.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/add/resnet_add.pnnx.bin");
   ASSERT_EQ(int(graph.graph_state()), -2);  // need_init
   graph.Build();
   ASSERT_EQ(int(graph.graph_state()), 0);
   ASSERT_EQ(graph.is_output_op("pnnx_output_0"), true);
   ASSERT_EQ(graph.is_output_op("random_str"), false);
+}
+
+TEST(test_runtime, graph_build1_crib) {
+  using namespace kuiper_infer;
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/modelpath/Crib_effcient.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/modelpath/Crib_effcient.pnnx.bin");
+  ASSERT_EQ(int(graph.graph_state()), -2);  // need_init
+  graph.Build();
+  ASSERT_EQ(int(graph.graph_state()), 0);
 }

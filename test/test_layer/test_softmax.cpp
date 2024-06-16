@@ -30,7 +30,7 @@
 TEST(test_layer, forward_softmax_dim1) {
   // softmax on dim = 1
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/softmax/softmax_dim1.pnnx.param", "tmp/softmax/softmax_dim1.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1.pnnx.bin");
 
   graph.Build();
   const uint32_t size = 24;
@@ -50,7 +50,7 @@ TEST(test_layer, forward_softmax_dim1) {
   graph.Forward(false);
   std::vector<std::shared_ptr<Tensor<float>>> outputs = graph.get_outputs("pnnx_output_0");
 
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/softmax/softmax_dim1.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1.csv");
   for (const auto& output : outputs) {
     output->Reshape({24}, true);
     for (int i = 0; i < 24; ++i) {
@@ -64,8 +64,8 @@ TEST(test_layer, forward_softmax_dim1) {
 TEST(test_layer, forward_softmax_dim1_minus2) {
   // softmax on dim = 1
   using namespace kuiper_infer;
-  RuntimeGraph graph("tmp/softmax/softmax_dim1_-2.pnnx.param",
-                     "tmp/softmax/softmax_dim1_-2.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1_-2.pnnx.param",
+                     "/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1_-2.pnnx.bin");
 
   graph.Build();
   const uint32_t size = 24;
@@ -85,7 +85,7 @@ TEST(test_layer, forward_softmax_dim1_minus2) {
   graph.Forward(false);
   std::vector<std::shared_ptr<Tensor<float>>> outputs = graph.get_outputs("pnnx_output_0");
 
-  arma::fmat real = CSVDataLoader::LoadData<float>("tmp/softmax/softmax_dim1.csv");
+  arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1.csv");
   for (const auto& output : outputs) {
     output->Reshape({24}, true);
     for (int i = 0; i < 24; ++i) {
@@ -117,7 +117,7 @@ TEST(test_layer, forward_softmax_dim0) {
     std::vector<sftensor> outputs(batch_size);
     softmax_layer.Forward(inputs, outputs);
 
-    arma::fmat real = CSVDataLoader::LoadData<float>("tmp/softmax/softmax_dim0.csv");
+    arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim0.csv");
     for (const auto& output : outputs) {
       output->Reshape({24}, true);
       for (int i = 0; i < 24; ++i) {
@@ -150,7 +150,7 @@ TEST(test_layer, forward_softmax_dim2) {
     std::vector<sftensor> outputs(batch_size);
     softmax_layer.Forward(inputs, outputs);
 
-    arma::fmat real = CSVDataLoader::LoadData<float>("tmp/softmax/softmax_dim2.csv");
+    arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim2.csv");
     for (const auto& output : outputs) {
       output->Reshape({24}, true);
       for (int i = 0; i < 24; ++i) {
@@ -307,7 +307,7 @@ TEST(test_layer, forward_softmax_dim1_1) {
     }
     std::vector<sftensor> outputs(batch_size);
     softmax_layer.Forward(inputs, outputs);
-    arma::fmat real = CSVDataLoader::LoadData<float>("tmp/softmax/softmax_dim1_1.csv");
+    arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1_1.csv");
     for (const auto& output : outputs) {
       output->Reshape({24}, true);
       for (int i = 0; i < 24; ++i) {
@@ -339,7 +339,7 @@ TEST(test_layer, forward_softmax_dim1_1_m) {
     }
     std::vector<sftensor> outputs(batch_size);
     softmax_layer.Forward(inputs, outputs);
-    arma::fmat real = CSVDataLoader::LoadData<float>("tmp/softmax/softmax_dim1_1.csv");
+    arma::fmat real = CSVDataLoader::LoadData<float>("/home/brown/GGB_kuiper/KuiperInfer/tmp/softmax/softmax_dim1_1.csv");
     for (const auto& output : outputs) {
       output->Reshape({24}, true);
       for (int i = 0; i < 24; ++i) {

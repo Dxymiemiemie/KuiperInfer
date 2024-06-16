@@ -177,7 +177,7 @@ TEST(test_layer, forward_batchnorm6) {
     inputs.push_back(input);
   }
 
-  RuntimeGraph graph("tmp/batchnorm/bn1.pnnx.param", "tmp/batchnorm/bn1.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/batchnorm/bn1.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/batchnorm/bn1.pnnx.bin");
   graph.Build();
   graph.set_inputs("pnnx_input_0", inputs);
   graph.Forward(false);
@@ -186,7 +186,7 @@ TEST(test_layer, forward_batchnorm6) {
   const auto& output_ = outputs.at(0);
   ASSERT_EQ(output_->channels(), 32);
   for (int i = 0; i < 32; ++i) {
-    const std::string& path = "tmp/batchnorm/bn_" + std::to_string(i) + ".csv";
+    const std::string& path = "/home/brown/GGB_kuiper/KuiperInfer/tmp/batchnorm/bn_" + std::to_string(i) + ".csv";
     const auto& output_data1 = CSVDataLoader::LoadData<float>(path);
     const auto& output_data2 = output_->slice(i);
     ASSERT_TRUE(arma::approx_equal(output_data1, output_data2, "absdiff", 1e-6));
@@ -204,7 +204,7 @@ TEST(test_layer, forward_batchnorm7) {
     inputs.push_back(input);
   }
 
-  RuntimeGraph graph("tmp/batchnorm/bn2.pnnx.param", "tmp/batchnorm/bn2.pnnx.bin");
+  RuntimeGraph graph("/home/brown/GGB_kuiper/KuiperInfer/tmp/batchnorm/bn2.pnnx.param", "/home/brown/GGB_kuiper/KuiperInfer/tmp/batchnorm/bn2.pnnx.bin");
   graph.Build();
   graph.set_inputs("pnnx_input_0", inputs);
   graph.Forward(false);
@@ -213,7 +213,7 @@ TEST(test_layer, forward_batchnorm7) {
   const auto& output_ = outputs.at(0);
   ASSERT_EQ(output_->channels(), 32);
   for (int i = 0; i < 32; ++i) {
-    const std::string& path = "tmp/batchnorm/bn2_" + std::to_string(i) + ".csv";
+    const std::string& path = "/home/brown/GGB_kuiper/KuiperInfer/tmp/batchnorm/bn2_" + std::to_string(i) + ".csv";
     const auto& output_data1 = CSVDataLoader::LoadData<float>(path);
     const auto& output_data2 = output_->slice(i);
     ASSERT_TRUE(arma::approx_equal(output_data1, output_data2, "absdiff", 1e-4));

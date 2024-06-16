@@ -54,6 +54,12 @@ void RuntimeOperatorUtils<float>::InitOperatorInput(
               input_operand_shape.size() == 3)
             << "Unsupported tensor shape sizes: " << input_operand_shape.size();
 
+        // if(input_operand->name=="Tensor.select_179")
+        //       {
+        //         std::cout<<"Tensor.select_179"<<input_operand->datas.size()<<std::endl;
+        //         // input_operand->datas[0]->Show();
+        //         std::cout<<input_datas.empty()<<std::endl;
+        //       } 
         if (!input_datas.empty()) {
           CHECK_EQ(input_datas.size(), batch);
         } else {
@@ -115,7 +121,25 @@ void RuntimeOperatorUtils<float>::InitOperatorOutput(
     std::copy_if(operand->shape.begin(), operand->shape.end(), std::back_inserter(operand_shapes),
                  [](int32_t dim) { return dim > 0; });
 
-    const auto& runtime_op = operators[i];
+    
+    // const auto runtime_op = operators[i]; 
+    auto runtime_op = operators[i];
+    int k=0;
+    if(runtime_op->name!=pnnx_operators[i]->name)
+    {
+      for(k;k<pnnx_operators.size();k++)
+      {
+        runtime_op = operators[k]; 
+        auto name=pnnx_operators[i]->name;
+        if(runtime_op->name==name)
+        {
+         
+          break;
+        }
+      }
+    }
+
+
     auto& output_tensors = runtime_op->output_operands;
     CHECK((operand_shapes.size() == 2 || operand_shapes.size() == 4 || operand_shapes.size() == 3))
         << "Unsupported shape sizes: " << operand_shapes.size();
@@ -127,12 +151,22 @@ void RuntimeOperatorUtils<float>::InitOperatorOutput(
     CHECK_EQ(operand->type, 1) << "The type of pnnx operand is not float32";
     if (!output_tensors) {
       bool has_found = false;
-      for (uint32_t j = 0; j < i; ++j) {
+ 
+
+      for (uint32_t j = 0; j < i; ++j)
+      {
+        
+        // if(runtime_op->name=="F.sigmoid_166"&&has_found)
+        // {
+        //   std::cout<<"Tensor.select_179"<<std::endl;
+        // }     
         if (has_found) {
           break;
         }
 
+
         const auto& prev_runtime_op = operators.at(j);
+
         if (!prev_runtime_op->output_operands || prev_runtime_op->occur_end_time != -1) {
           continue;
         }
@@ -145,30 +179,39 @@ void RuntimeOperatorUtils<float>::InitOperatorOutput(
           if (prev_runtime_op->output_operands->size() == operand_size) {
             has_found = true;
             const auto& prev_output_operand = prev_runtime_op->output_operands;
-            runtime_op->output_operands = std::make_shared<RuntimeOperand>(
-                prev_output_operand->name + "_output", operand_shapes, batch,
-                RuntimeDataType::kTypeFloat32);
+            runtime_op->output_operands = std::make_shared<RuntimeOperand>();
+            runtime_op->output_operands->datas.resize(batch);
+            runtime_op->output_operands->name = prev_output_operand->name + "_output";
+            runtime_op->output_operands->shapes = operand_shapes;
+            runtime_op->output_operands->type = RuntimeDataType::kTypeFloat32;
             const auto& prev_runtime_op_tensors = prev_output_operand->datas;
             for (uint32_t b = 0; b < batch; ++b) {
               sftensor prev_output_tensor = prev_runtime_op_tensors.at(b);
               sftensor output_tensor = std::make_shared<ftensor>(prev_output_tensor->raw_ptr(),
                                                                  prev_output_tensor->shapes());
+              // if(runtime_op->name=="F.sigmoid_168")
+              // {
+              //   std::cout<<" "<<std::endl;
+              // }
               CheckAndReshapeTensor(output_tensor, operand_shapes);
               output_tensors->datas[b] = output_tensor;
             }
             prev_runtime_op->occur_end_time = runtime_op->end_time;
           }
         }
+      
       }
-
+    
+      if(runtime_op->name=="F.sigmoid_166")
+              {
+                std::cout<<" "<<std::endl;
+              }
       if (!has_found) {
         std::vector<sftensor> output_operand_datas;
         for (uint32_t j = 0; j < batch; ++j) {
-          output_operand_datas.push_back(CreateTensor(operand_shapes));
+          output_operand_datas.push_back(CreateTensor(operand_shapes));//根据shaape来初始化输出张量
         }
-        runtime_op->output_operands =
-            std::make_shared<RuntimeOperand>(operand->name + "_output", operand_shapes,
-                                             output_operand_datas, RuntimeDataType::kTypeFloat32);
+        runtime_op->output_operands =std::make_shared<RuntimeOperand>(operand->name + "_output", operand_shapes,output_operand_datas, RuntimeDataType::kTypeFloat32);
       }
     } else {
       CHECK(batch == output_tensors->datas.size());
